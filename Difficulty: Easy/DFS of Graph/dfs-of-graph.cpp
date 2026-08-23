@@ -1,21 +1,21 @@
 class Solution {
   public:
-    vector<int>ans;
-    void n_dfs(vector<vector<int>>&adj,int node,vector<bool>&visited){
-        ans.push_back(node);
-        visited[node]=1;
-        for(auto nbr:adj[node]){
+    
+    void fun(vector<vector<int>>&adj,vector<bool>&visited,int root,vector<int>&ans){
+        ans.push_back(root);
+        visited[root]=true;
+        for(auto &nbr:adj[root]){
             if(!visited[nbr]){
-                n_dfs(adj,nbr,visited);
+                fun(adj,visited,nbr,ans);
             }
         }
-        
     }
     vector<int> dfs(vector<vector<int>>& adj) {
         // Code here
         int n=adj.size();
-        vector<bool>visited(n,0);
-        n_dfs(adj,0,visited);
+        vector<int>ans;
+        vector<bool>visited(n,false);
+        fun(adj,visited,0,ans);
         return ans;
     }
 };
