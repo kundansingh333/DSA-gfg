@@ -1,28 +1,27 @@
 class Solution {
   public:
-    void fun(vector<vector<int>>&adj,vector<bool>&visited,int src,vector<int>&ans){
+    void fun(vector<vector<int>>&adj,vector<int>&visited,vector<int>&ans,int src){
         queue<int>q;
+        visited[src]=1;
         q.push(src);
-        visited[src]=true;
         while(!q.empty()){
-            auto f=q.front();
+            int f=q.front();
             q.pop();
             ans.push_back(f);
             for(auto &nbr:adj[f]){
                 if(!visited[nbr]){
+                    visited[nbr]=1;
                     q.push(nbr);
-                    visited[nbr]=true;
                 }
             }
         }
-        
     }
     vector<int> bfs(vector<vector<int>> &adj) {
         // code here
         int n=adj.size();
-        vector<bool>visited(n,false);
+        vector<int>visited(n,0);
         vector<int>ans;
-        fun(adj,visited,0,ans);
+        fun(adj,visited,ans,0);
         return ans;
     }
 };
