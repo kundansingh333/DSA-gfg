@@ -1,21 +1,20 @@
 class Solution {
   public:
     
-    void fun(vector<vector<int>>&adj,vector<bool>&visited,int root,vector<int>&ans){
-        ans.push_back(root);
-        visited[root]=true;
-        for(auto &nbr:adj[root]){
+    void dfs_traversal(vector<vector<int>>&adj,int src,vector<int>&visited,vector<int>&ans){
+        visited[src]=1;
+        ans.push_back(src);
+        for(auto &nbr:adj[src]){
             if(!visited[nbr]){
-                fun(adj,visited,nbr,ans);
+                dfs_traversal(adj,nbr,visited,ans);
             }
         }
     }
-    vector<int> dfs(vector<vector<int>>& adj) {
-        // Code here
+    vector<int> dfs(vector<vector<int>>&adj){
         int n=adj.size();
         vector<int>ans;
-        vector<bool>visited(n,false);
-        fun(adj,visited,0,ans);
+        vector<int>visited(n,0);
+        dfs_traversal(adj,0,visited,ans);
         return ans;
     }
 };
