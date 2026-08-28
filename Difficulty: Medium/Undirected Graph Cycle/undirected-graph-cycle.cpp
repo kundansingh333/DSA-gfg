@@ -1,34 +1,39 @@
 class Solution {
   public:
-    bool dfs(vector<vector<int>>&adj,vector<bool>&visited,int parent,int src){
-        visited[src]=true;
+    int dfs(vector<vector<int>>&adj,vector<int>&visited,int &parent,int src){
+        visited[src]=1;
         for(auto &nbr:adj[src]){
             if(!visited[nbr]){
-                bool ans=dfs(adj,visited,src,nbr);
-                if(ans) return true;
-            }else if(visited[nbr]==true && parent!=nbr){
-                return true;
+                int ans=dfs(adj,visited,src,nbr);
+                if(ans) return 1;
+            }else if(visited[nbr] && parent!=nbr){
+                return 1;
             }
         }
-        return false;
+        visited[src]=0;
+        return 0;
     }
     bool isCycle(int V, vector<vector<int>>& edges) {
         // Code here
         vector<vector<int>>adj(V);
-        for(int i=0; i<edges.size(); i++){
-            int a=edges[i][0];
-            int b=edges[i][1];
+        for(auto &edge:edges){
+            int a=edge[0];
+            int b=edge[1];
             adj[a].push_back(b);
             adj[b].push_back(a);
         }
-        vector<bool>visited(V,false);
+        
+        vector<int>visited(V,0);
+        int parent=-1;
         for(int i=0; i<V; i++){
             if(!visited[i]){
-                bool ans=dfs(adj,visited,-1,i);
+                int ans=dfs(adj,visited,parent,i);
                 if(ans) return true;
             }
         }
         return false;
+        
+        
         
     }
 };
